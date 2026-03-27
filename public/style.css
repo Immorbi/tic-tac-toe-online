@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   min-height: 100vh;
@@ -14,42 +10,34 @@ body {
   background: #f0f2f8;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   color: #1e1e2e;
+  padding: 1.5rem;
 }
 
-.container {
+.wrapper {
   text-align: center;
-  padding: 2.5rem 2rem;
   background: #ffffff;
   border-radius: 28px;
-  box-shadow:
-    0 2px 4px rgba(0,0,0,0.04),
-    0 8px 24px rgba(0,0,0,0.08),
-    0 24px 48px rgba(0,0,0,0.06);
-  min-width: 360px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.06);
+  width: 100%;
+  max-width: 780px;
 }
 
-/* Заголовок */
 h1 {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1.5rem;
   color: #1e1e2e;
 }
+h1 .x-color { color: #f0503a; }
+h1 .o-color { color: #4a7cf6; }
 
-h1 span.x-color { color: #f0503a; }
-h1 span.o-color { color: #4a7cf6; }
+/* Лобби */
+.subtitle { color: #9095a0; font-size: 0.9rem; font-weight: 500; margin-bottom: 1.5rem; }
 
-.subtitle {
-  color: #9095a0;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-}
-
-/* Кнопки */
 button {
-  padding: 0.75rem 2.2rem;
+  padding: 0.75rem 2rem;
   font-size: 0.95rem;
   font-weight: 700;
   font-family: inherit;
@@ -57,211 +45,218 @@ button {
   border-radius: 14px;
   cursor: pointer;
   background: #1e1e2e;
-  color: #ffffff;
-  letter-spacing: 0.3px;
+  color: #fff;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 4px 12px rgba(30, 30, 46, 0.25);
+  box-shadow: 0 4px 12px rgba(30,30,46,0.2);
 }
+button:hover { background: #2e2e4e; transform: translateY(-1px); }
+button:active { transform: translateY(0); }
 
-button:hover {
-  background: #2e2e4e;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(30, 30, 46, 0.3);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 /* Ожидание */
-#waiting {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-#waiting p {
-  color: #5a5f72;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
+#waiting { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+#waiting p { color: #5a5f72; font-size: 0.95rem; font-weight: 500; }
 .spinner {
-  width: 44px;
-  height: 44px;
-  border: 3px solid #e8eaf0;
-  border-top-color: #4a7cf6;
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
+  width: 44px; height: 44px;
+  border: 3px solid #e8eaf0; border-top-color: #4a7cf6;
+  border-radius: 50%; animation: spin 0.9s linear infinite;
 }
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
+@keyframes spin { to { transform: rotate(360deg); } }
 .room-id {
-  display: inline-block;
-  background: #f4f5f9;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #6b7280;
-  letter-spacing: 1px;
+  background: #f4f5f9; padding: 0.3rem 0.9rem; border-radius: 20px;
+  font-size: 0.82rem; font-weight: 600; color: #6b7280; letter-spacing: 1px;
 }
 
-/* Статус */
-#status {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1.25rem;
-  min-height: 1.6rem;
-  color: #9095a0;
-  transition: color 0.3s;
+/* Лейаут игры */
+.game-layout {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-#status.your-turn {
-  color: #16a34a;
-}
-
-#status.opponent-turn {
-  color: #d97706;
-}
-
-#status.game-over {
-  font-size: 1.15rem;
-  color: #1e1e2e;
-}
-
-/* Доска */
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 294px;
-  margin: 0 auto 1.5rem;
-}
-
-.cell {
-  width: 88px;
-  height: 88px;
-  background: #f4f5f9;
-  border: 2px solid #eceef4;
-  border-radius: 16px;
+/* Статус + таймер */
+.status-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
-  font-weight: 800;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  min-height: 2rem;
+}
+
+#status {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #9095a0;
+  transition: color 0.3s;
+}
+#status.your-turn { color: #16a34a; }
+#status.opponent-turn { color: #d97706; }
+#status.game-over { color: #1e1e2e; font-size: 1.1rem; }
+
+/* Таймер */
+.timer {
+  position: relative;
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+}
+.timer-ring {
+  width: 40px; height: 40px;
+  transform: rotate(-90deg);
+}
+.timer-bg {
+  fill: none; stroke: #eceef4; stroke-width: 3;
+}
+.timer-arc {
+  fill: none; stroke: #4a7cf6; stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 94.2;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s;
+}
+.timer-arc.urgent { stroke: #f0503a; }
+#timerCount {
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; color: #1e1e2e;
+}
+
+/* Доска 5x5 */
+.board-col { display: flex; flex-direction: column; align-items: center; }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 370px;
+  margin-bottom: 1rem;
+}
+
+.cell {
+  width: 68px; height: 68px;
+  background: #f4f5f9;
+  border: 2px solid #eceef4;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-weight: 800;
   cursor: pointer;
   transition: background 0.15s, transform 0.15s, border-color 0.15s, box-shadow 0.15s;
   user-select: none;
 }
-
 .cell:hover:not(.taken) {
-  background: #eceef4;
-  border-color: #d8dbe8;
-  transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background: #eceef4; border-color: #d8dbe8;
+  transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-
-.cell.taken {
-  cursor: default;
-}
-
-.cell.X {
-  color: #f0503a;
-}
-
-.cell.O {
-  color: #4a7cf6;
-}
-
+.cell.taken { cursor: default; }
+.cell.X { color: #f0503a; }
+.cell.O { color: #4a7cf6; }
 .cell.winner {
   border-color: transparent;
-  box-shadow: 0 0 0 3px currentColor, 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 0 3px currentColor, 0 4px 16px rgba(0,0,0,0.1);
   animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-@keyframes pop {
-  0%   { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-
-/* Разделители доски — линии через отступы */
-.board .cell:nth-child(1),
-.board .cell:nth-child(2),
-.board .cell:nth-child(3) {
-  border-top-color: transparent;
-}
-.board .cell:nth-child(7),
-.board .cell:nth-child(8),
-.board .cell:nth-child(9) {
-  border-bottom-color: transparent;
-}
-.board .cell:nth-child(1),
-.board .cell:nth-child(4),
-.board .cell:nth-child(7) {
-  border-left-color: transparent;
-}
-.board .cell:nth-child(3),
-.board .cell:nth-child(6),
-.board .cell:nth-child(9) {
-  border-right-color: transparent;
-}
+@keyframes pop { 0% { transform: scale(0.85); } 100% { transform: scale(1); } }
 
 /* Счёт */
 .score {
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 1.25rem;
-  background: #f4f5f9;
-  border-radius: 16px;
-  padding: 0.6rem 0;
-  overflow: hidden;
+  display: flex; justify-content: center; gap: 0;
+  background: #f4f5f9; border-radius: 14px;
+  padding: 0.5rem 0; margin-bottom: 1rem;
+  width: 100%;
 }
-
 .score span {
-  flex: 1;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #9095a0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  flex: 1; font-size: 0.78rem; font-weight: 600; color: #9095a0;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
   border-right: 1px solid #eceef4;
 }
-
-.score span:last-child {
-  border-right: none;
-}
-
-.score b {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #1e1e2e;
-  line-height: 1;
-}
-
+.score span:last-child { border-right: none; }
+.score b { font-size: 1.2rem; font-weight: 800; color: #1e1e2e; line-height: 1; }
 .score .label-x b { color: #f0503a; }
 .score .label-o b { color: #4a7cf6; }
 
 #restartBtn {
-  margin-top: 0.25rem;
-  background: #f4f5f9;
-  color: #1e1e2e;
-  box-shadow: none;
-  border: 2px solid #eceef4;
+  background: #f4f5f9; color: #1e1e2e;
+  box-shadow: none; border: 2px solid #eceef4;
+}
+#restartBtn:hover { background: #eceef4; box-shadow: none; }
+
+/* Чат */
+.chat-col {
+  display: flex; flex-direction: column;
+  width: 240px; flex-shrink: 0;
+  background: #f8f9fb;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1.5px solid #eceef4;
+  height: 430px;
+}
+.chat-header {
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem; font-weight: 700;
+  color: #9095a0; letter-spacing: 0.5px;
+  border-bottom: 1.5px solid #eceef4;
+  background: #fff;
+}
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 0.75rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: #dde0ea; border-radius: 4px; }
+
+.chat-msg {
+  display: flex; flex-direction: column;
+  max-width: 90%;
+}
+.chat-msg.mine { align-self: flex-end; align-items: flex-end; }
+.chat-msg.theirs { align-self: flex-start; align-items: flex-start; }
+
+.chat-bubble {
+  padding: 0.45rem 0.75rem;
+  border-radius: 14px;
+  font-size: 0.85rem; line-height: 1.4;
+  word-break: break-word;
+}
+.chat-msg.mine .chat-bubble { background: #1e1e2e; color: #fff; border-bottom-right-radius: 4px; }
+.chat-msg.theirs .chat-bubble { background: #eceef4; color: #1e1e2e; border-bottom-left-radius: 4px; }
+
+.chat-label {
+  font-size: 0.7rem; font-weight: 600;
+  color: #b0b5c0; margin: 0 4px 2px;
 }
 
-#restartBtn:hover {
-  background: #eceef4;
-  box-shadow: none;
+.chat-system {
+  text-align: center; font-size: 0.75rem;
+  color: #b0b5c0; font-style: italic;
+  padding: 0.2rem 0;
+}
+
+.chat-input-row {
+  display: flex; gap: 0; border-top: 1.5px solid #eceef4;
+}
+#chatInput {
+  flex: 1; border: none; outline: none;
+  padding: 0.75rem 0.75rem;
+  font-size: 0.85rem; font-family: inherit;
+  background: #fff; color: #1e1e2e;
+  border-bottom-left-radius: 18px;
+}
+#chatInput::placeholder { color: #c0c4d0; }
+#chatSend {
+  padding: 0.6rem 1rem;
+  background: #1e1e2e; color: #fff;
+  border-radius: 0 0 18px 0;
+  box-shadow: none; font-size: 1rem;
+}
+#chatSend:hover { background: #2e2e4e; transform: none; box-shadow: none; }
+
+@media (max-width: 660px) {
+  .game-layout { flex-direction: column; align-items: center; }
+  .board { width: 320px; }
+  .cell { width: 58px; height: 58px; font-size: 1.4rem; }
+  .chat-col { width: 100%; height: 260px; }
 }

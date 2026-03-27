@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="wrapper">
     <h1><span class="x-color">✕</span> Крестики-Нолики <span class="o-color">○</span></h1>
 
     <div id="lobby">
-      <p class="subtitle">Сетевая игра для двух игроков</p>
+      <p class="subtitle">Сетевая игра · 5×5 · 5 в ряд</p>
       <button id="joinBtn">Найти игру</button>
     </div>
 
@@ -22,24 +22,43 @@
     </div>
 
     <div id="game" class="hidden">
-      <div id="status"></div>
-      <div id="board" class="board">
-        <div class="cell" data-index="0"></div>
-        <div class="cell" data-index="1"></div>
-        <div class="cell" data-index="2"></div>
-        <div class="cell" data-index="3"></div>
-        <div class="cell" data-index="4"></div>
-        <div class="cell" data-index="5"></div>
-        <div class="cell" data-index="6"></div>
-        <div class="cell" data-index="7"></div>
-        <div class="cell" data-index="8"></div>
+      <div class="game-layout">
+
+        <!-- Левая колонка: статус + доска + счёт -->
+        <div class="board-col">
+          <div class="status-bar">
+            <div id="status"></div>
+            <div id="timer" class="timer hidden">
+              <svg class="timer-ring" viewBox="0 0 36 36">
+                <circle class="timer-bg" cx="18" cy="18" r="15"/>
+                <circle id="timerArc" class="timer-arc" cx="18" cy="18" r="15"/>
+              </svg>
+              <span id="timerCount">20</span>
+            </div>
+          </div>
+
+          <div id="board" class="board"></div>
+
+          <div id="score" class="score">
+            <span class="label-x">X <b id="scoreX">0</b></span>
+            <span>Ничья <b id="scoreDraw">0</b></span>
+            <span class="label-o">O <b id="scoreO">0</b></span>
+          </div>
+
+          <button id="restartBtn" class="hidden">Играть снова</button>
+        </div>
+
+        <!-- Правая колонка: чат -->
+        <div class="chat-col">
+          <div class="chat-header">Чат</div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <div class="chat-input-row">
+            <input id="chatInput" type="text" placeholder="Написать..." maxlength="200" />
+            <button id="chatSend">→</button>
+          </div>
+        </div>
+
       </div>
-      <div id="score" class="score">
-        <span class="label-x">X <b id="scoreX">0</b></span>
-        <span>Ничья <b id="scoreDraw">0</b></span>
-        <span class="label-o">O <b id="scoreO">0</b></span>
-      </div>
-      <button id="restartBtn" class="hidden">Играть снова</button>
     </div>
   </div>
 
