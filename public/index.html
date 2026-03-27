@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Крестики-Нолики Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1><span class="x-color">✕</span> Крестики-Нолики <span class="o-color">○</span></h1>
+
+    <div id="lobby">
+      <p class="subtitle">Сетевая игра для двух игроков</p>
+      <button id="joinBtn">Найти игру</button>
+    </div>
+
+    <div id="waiting" class="hidden">
+      <div class="spinner"></div>
+      <p>Ожидание соперника...</p>
+      <p class="room-id">Комната: <span id="roomId"></span></p>
+    </div>
+
+    <div id="game" class="hidden">
+      <div id="status"></div>
+      <div id="board" class="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+      <div id="score" class="score">
+        <span class="label-x">X <b id="scoreX">0</b></span>
+        <span>Ничья <b id="scoreDraw">0</b></span>
+        <span class="label-o">O <b id="scoreO">0</b></span>
+      </div>
+      <button id="restartBtn" class="hidden">Играть снова</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
