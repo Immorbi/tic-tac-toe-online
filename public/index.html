@@ -12,7 +12,16 @@
 
     <div id="lobby">
       <p class="subtitle">Сетевая игра · 5×5 · 5 в ряд</p>
-      <button id="joinBtn">Найти игру</button>
+      <div class="lobby-options">
+        <button id="createBtn">Создать комнату</button>
+        <div class="lobby-divider"><span>или</span></div>
+        <div class="code-join">
+          <input id="codeInput" type="text" placeholder="Код комнаты" maxlength="6" />
+          <button id="joinByCodeBtn">Войти</button>
+        </div>
+        <button id="joinBtn" class="btn-secondary">Случайная игра</button>
+      </div>
+      <p id="lobbyError" class="lobby-error hidden"></p>
     </div>
 
     <div id="waiting" class="hidden">

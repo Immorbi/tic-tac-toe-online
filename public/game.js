@@ -3,6 +3,10 @@ const lobby       = document.getElementById('lobby');
 const waiting     = document.getElementById('waiting');
 const game        = document.getElementById('game');
 const joinBtn     = document.getElementById('joinBtn');
+const createBtn   = document.getElementById('createBtn');
+const joinByCodeBtn = document.getElementById('joinByCodeBtn');
+const codeInput   = document.getElementById('codeInput');
+const lobbyError  = document.getElementById('lobbyError');
 const restartBtn  = document.getElementById('restartBtn');
 const statusEl    = document.getElementById('status');
 const roomIdEl    = document.getElementById('roomId');
@@ -151,10 +155,35 @@ function stopTimer() {
 
 // --- WebSocket ---
 joinBtn.addEventListener('click', () => {
+  goWaiting();
+  connect('join');
+});
+
+createBtn.addEventListener('click', () => {
+  goWaiting();
+  connect('create');
+});
+
+joinByCodeBtn.addEventListener('click', joinByCode);
+codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') joinByCode(); });
+
+function joinByCode() {
+  const code = codeInput.value.trim().toUpperCase();
+  if (code.length < 4) { showLobbyError('Введи код комнаты'); return; }
+  goWaiting();
+  connect('joinByCode', code);
+}
+
+function goWaiting() {
   lobby.classList.add('hidden');
   waiting.classList.remove('hidden');
-  connect();
-});
+  lobbyError.classList.add('hidden');
+}
+
+function showLobbyError(msg) {
+  lobbyError.textContent = msg;
+  lobbyError.classList.remove('hidden');
+}
 
 restartBtn.addEventListener('click', () => {
   ws.send(JSON.stringify({ type: 'restart' }));
@@ -167,10 +196,13 @@ function onCellClick(index) {
   ws.send(JSON.stringify({ type: 'move', index }));
 }
 
-function connect() {
+function connect(type, code) {
   const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
   ws = new WebSocket(`${protocol}://${location.host}`);
-  ws.onopen = () => ws.send(JSON.stringify({ type: 'join' }));
+  ws.onopen = () => {
+    const msg = type === 'joinByCode' ? { type, code } : { type };
+    ws.send(JSON.stringify(msg));
+  };
   ws.onmessage = (e) => handle(JSON.parse(e.data));
   ws.onclose = () => {
     if (gameActive) { showStatus('Соединение потеряно', 'game-over'); gameActive = false; stopTimer(); }
@@ -182,6 +214,10 @@ function handle(msg) {
     case 'joined':
       mySymbol = msg.symbol;
       roomIdEl.textContent = msg.roomId;
+      // Показываем подсказку только если ждём второго игрока
+      if (msg.playersCount === 1) {
+        document.querySelector('#waiting p').textContent = 'Отправь код другу:';
+      }
       break;
 
     case 'start':
@@ -231,6 +267,13 @@ function handle(msg) {
       showStatus('Соперник покинул игру', 'game-over');
       addSystemMsg('Соперник отключился');
       restartBtn.classList.add('hidden');
+      break;
+
+    case 'error':
+      waiting.classList.add('hidden');
+      lobby.classList.remove('hidden');
+      showLobbyError(msg.message);
+      ws.close();
       break;
 
     case 'chat':

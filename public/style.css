@@ -36,6 +36,75 @@ h1 .o-color { color: #4a7cf6; }
 /* Лобби */
 .subtitle { color: #9095a0; font-size: 0.9rem; font-weight: 500; margin-bottom: 1.5rem; }
 
+.lobby-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lobby-divider {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  gap: 0.75rem;
+  color: #c0c4d0;
+  font-size: 0.8rem;
+}
+.lobby-divider::before,
+.lobby-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #eceef4;
+}
+
+.code-join {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#codeInput {
+  width: 140px;
+  padding: 0.7rem 1rem;
+  border: 2px solid #eceef4;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  outline: none;
+  color: #1e1e2e;
+  transition: border-color 0.2s;
+}
+#codeInput:focus { border-color: #4a7cf6; }
+#codeInput::placeholder { letter-spacing: 1px; font-weight: 400; color: #c0c4d0; text-transform: none; }
+
+#joinByCodeBtn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.btn-secondary {
+  background: #f4f5f9;
+  color: #5a5f72;
+  box-shadow: none;
+  border: 2px solid #eceef4;
+  font-size: 0.85rem;
+}
+.btn-secondary:hover { background: #eceef4; box-shadow: none; transform: none; }
+
+.lobby-error {
+  color: #f0503a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
 button {
   padding: 0.75rem 2rem;
   font-size: 0.95rem;
@@ -72,7 +141,7 @@ button:active { transform: translateY(0); }
 .game-layout {
   display: flex;
   gap: 1.5rem;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
 }
 
@@ -191,7 +260,7 @@ button:active { transform: translateY(0); }
   border-radius: 18px;
   overflow: hidden;
   border: 1.5px solid #eceef4;
-  height: 430px;
+  margin-bottom: 16px;
 }
 .chat-header {
   padding: 0.75rem 1rem;

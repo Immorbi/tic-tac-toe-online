@@ -129,6 +129,56 @@ wss.on('connection', (ws) => {
       }
     }
 
+    if (msg.type === 'create') {
+      const id = Math.random().toString(36).slice(2, 8).toUpperCase();
+      const room = createRoom(id);
+      rooms.set(id, room);
+      playerRoom = room;
+      playerSymbol = 'X';
+      room.players.push({ ws, symbol: 'X' });
+
+      ws.send(JSON.stringify({
+        type: 'joined',
+        symbol: 'X',
+        roomId: room.id,
+        playersCount: 1,
+      }));
+    }
+
+    if (msg.type === 'joinByCode') {
+      const code = (msg.code || '').toUpperCase().trim();
+      const room = rooms.get(code);
+
+      if (!room) {
+        ws.send(JSON.stringify({ type: 'error', message: 'Комната не найдена' }));
+        return;
+      }
+      if (room.players.length >= 2) {
+        ws.send(JSON.stringify({ type: 'error', message: 'Комната занята' }));
+        return;
+      }
+
+      playerRoom = room;
+      playerSymbol = 'O';
+      room.players.push({ ws, symbol: 'O' });
+
+      ws.send(JSON.stringify({
+        type: 'joined',
+        symbol: 'O',
+        roomId: room.id,
+        playersCount: 2,
+      }));
+
+      room.turnStarted = Date.now();
+      broadcast(room, {
+        type: 'start',
+        board: room.board,
+        currentTurn: room.currentTurn,
+        turnStarted: room.turnStarted,
+        timerSeconds: TIMER_SECONDS,
+      });
+    }
+
     if (msg.type === 'move' && playerRoom) {
       const room = playerRoom;
       const { index } = msg;
